@@ -24,35 +24,13 @@ change$change_component[change$change_component == "weather_risks"] <- "Fishery\
 change$change_component[change$change_component == "stock_distribution"] <- "Stock\ndistribution"
 change$change_component[change$change_component == "stock_abundance"] <- "Stock\nabundance"
 
-df <- change %>% 
-        group_by(change_component, change_value) %>% 
-        summarise(number = n())
-
-df$change_value <- as.factor(df$change_value)
-
-df$change_value <- factor(df$change_value,
-                          levels(df$change_value)[c(1,3,5,6,4,2)])
-
 ####CC perception
-df2 <- change %>% 
-  group_by(change_component, change_CC) %>% 
-  summarise(number = n())
-
-df2$change_CC[df2$change_CC == 6] <- 0
-df2$change_CC <- as.factor(df2$change_CC)
-
 change_CC_vars <- c("Don't know", #0
                     "Not at all", #1
                     "Slightly", #2
                     "Moderately", #3
                     "Very", #4
                     "Extremely") #5
-
-levels(df2$change_CC) <- change_CC_vars
-
-# Grouped barplot
-group1 <- c("Extremely","Very","Moderately")
-group2 <- c("Moderately","Slightly","Not at all","Don't know")
 
 #by groups
 df_group <- change %>% 
@@ -94,21 +72,14 @@ df2_group$change_CC <- as.factor(df2_group$change_CC)
 
 levels(df2_group$change_CC) <- change_CC_vars
 
-df2_group$new <- df2_group$number
-df2_group$new <- ifelse(df2_group$change_CC == "Moderately", 
-                       df2_group$number/2, 
-                       df2_group$new)
 
 jpeg("Figure4.jpg", 
     width = 11, height = 4, units = 'in', res = 300)
 
 ggplot(df2_group, aes(x = group, fill = change_CC)) + 
-  geom_bar(data = subset(df2_group, change_CC %in% group1),
-           aes(y = new), 
+  geom_bar(data = df2_group,
+           aes(y = number), 
            position = position_stack(reverse = T), 
-           stat = "identity") +
-  geom_bar(data = subset(df2_group, change_CC %in% group2), 
-           aes(y = -new),
            stat = "identity") +
   coord_flip() +
   xlab("") +

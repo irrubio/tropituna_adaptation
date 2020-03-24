@@ -14,13 +14,6 @@ CV <- read_xlsx("data/data.xlsx", sheet = 4)
 group <- read_xlsx("data/data.xlsx", sheet = 1)
 data <- left_join(CV, group, by ="ID")
 
-df <- data %>% 
-        group_by(CV_component, CV_value) %>% 
-        summarise(number = n())
-
-df$CV_component <- as.factor(df$CV_component)
-df$CV_value <- as.factor(df$CV_value)
-
 CV_vars <- c("Recreational \n activities", #1
              "Private \n business", #2
              "Inspiration culture/\ndesign", #3
@@ -30,21 +23,11 @@ CV_vars <- c("Recreational \n activities", #1
              "Tourism" #7
 )
 
-levels(df$CV_component) <- CV_vars
-
-df$CV_component <- factor(df$CV_component,
-                          levels(df$CV_component)[c(2,6,5:3,7,1)])
-
 generated <- c("Not at all", #1
                 "Slightly", #2
                 "Moderately", #3
                 "Very", #4
                 "Extremely") #5
-
-levels(df$CV_value) <- generated
-
-group1 <- c("Extremely","Very","Moderately")
-group2 <- c("Not at all","Slightly","Moderately")
 
 #by group
 df_group <- data %>% 
@@ -61,24 +44,13 @@ df_group$CV_component <- factor(df_group$CV_component,
 
 levels(df_group$CV_value) <- generated
 
-df_group <- df_group %>%  
-              mutate(perc = (number*100)/13)
-
-df_group$new <- df_group$number
-df_group$new <- ifelse(df_group$CV_value == "Moderately", 
-                       df_group$number/2,
-                       df_group$new)
-
 jpeg("Figure2.jpg", 
-    width = 12.5, height = 6.5, units = 'in', res = 300)
+    width = 13, height = 6.5, units = 'in', res = 300)
 
 ggplot(df_group, aes(x = group, fill = CV_value)) + 
-  geom_bar(data = subset(df_group, CV_value %in% group1),
-           aes(y = new), 
+  geom_bar(data = df_group,
+           aes(y = number), 
            position = position_stack(reverse = T), 
-           stat = "identity") +
-  geom_bar(data = subset(df_group, CV_value %in% group2), 
-           aes(y = -new),
            stat = "identity") +
   coord_flip() +
   xlab("") +
