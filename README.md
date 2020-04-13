@@ -1,5 +1,5 @@
 # tropituna_adaptation
-[![DOI](https://zenodo.org/badge/249221029.svg)](https://zenodo.org/badge/latestdoi/249221029)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3749867.svg)](https://doi.org/10.5281/zenodo.3749867)
 
 ## Description
 
