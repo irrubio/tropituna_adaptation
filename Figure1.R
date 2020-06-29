@@ -5,12 +5,12 @@ options("rgdal_show_exportToProj4_warnings"="none")
 library(rgdal) #readOgr
 library(rgeos) # gBuffer, gOverlap
 
-#3.READ the data
+#1.READ the data####
 data_orig <- read_xlsx("data/t2ce_PS91-18_bySchool.xlsx", sheet = 1, skip = 6)
 
 data <- filter(data_orig, Flag == "EU.España")
 
-#5.Delete species we are not interested in
+#2.Delete species we are not interested in####
 data$ALB <- NULL
 data$BLF <- NULL
 data$LTA <- NULL
@@ -25,7 +25,7 @@ d <- data %>%
       group_by(yLat, xLon) %>%
       summarise(total = sum(total, na.rm = T))
 
-#DELETE LAND POINTS
+#3.DELETE LAND POINTS####
 p <- d #save table data into p and turn it into a SpatialPointsDataFrame
 coordinates(p) <- c("xLon", "yLat")
 # tell R that catch coordinates are in the same lat/lon reference system
@@ -99,7 +99,7 @@ eez_table <- fortify(eezs)
 
 world <- map_data("world")
 
-#Figure1
+#4.Plot and save Figure1####
 jpeg("Figure1.jpg", 
      width = 15, height = 20, units = 'in', res = 300)
 
