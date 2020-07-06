@@ -118,7 +118,7 @@ ggplot(tablenew, aes(xLon, yLat)) +
   theme_bw() +
   xlab("Longitude") +
   ylab("Latitude") +
-  labs(size = "Average yearly \n catch (t)") +
+  labs(size = "Average yearly \ncatch (t)") +
   theme(axis.text.x = element_text(size = 40),
         axis.text.y = element_text(size = 40),
         axis.title = element_text(size = 40),
