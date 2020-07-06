@@ -91,7 +91,7 @@ p_land <- semi_join(d, land) #points land
 tablenew <- anti_join(d, land) #save table without points inland
 
 #size for dots
-tablenew$size <- tablenew$total/1000000
+tablenew$size <- (tablenew$total/1000)/28
 
 # Load EEZ polygons, downloaded from http://www.marineregions.org/downloads.php
 eezs <- readOGR(dsn = "data/World_EEZ_v11_20191118/eez_boundaries_v11.shp")
@@ -118,7 +118,7 @@ ggplot(tablenew, aes(xLon, yLat)) +
   theme_bw() +
   xlab("Longitude") +
   ylab("Latitude") +
-  labs(size = "Cumulative catch\n(million t)") +
+  labs(size = "Average yearly \n catch (t)") +
   theme(axis.text.x = element_text(size = 40),
         axis.text.y = element_text(size = 40),
         axis.title = element_text(size = 40),
