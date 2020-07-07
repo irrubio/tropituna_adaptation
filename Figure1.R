@@ -22,7 +22,7 @@ data$total <- data$YFT + data$BET + data$SKJ
 
 #Calculate total catch by latitude and longitude point
 d <- data %>%
-      group_by(yLat, xLon) %>%
+      group_by(yLat, xLon, YearC) %>%
       summarise(total = sum(total, na.rm = T))
 
 #3.DELETE LAND POINTS####
@@ -90,20 +90,24 @@ land <- as.data.frame(true_land) #data.frame with coordinates of land points
 p_land <- semi_join(d, land) #points land
 tablenew <- anti_join(d, land) #save table without points inland
 
-#size for dots
-tablenew$size <- (tablenew$total/1000)/28
-
 # Load EEZ polygons, downloaded from http://www.marineregions.org/downloads.php
 eezs <- readOGR(dsn = "data/World_EEZ_v11_20191118/eez_boundaries_v11.shp")
 eez_table <- fortify(eezs)
 
 world <- map_data("world")
 
+tablenew2 <- tablenew %>%
+              group_by(yLat, xLon) %>%
+              summarise(total = sum(total, na.rm = T))
+
+#size for dots
+tablenew2$size <- (tablenew2$total/1000)/28
+
 #4.Plot and save Figure1####
 jpeg("Figure1.jpg", 
      width = 15, height = 20, units = 'in', res = 300)
 
-ggplot(tablenew, aes(xLon, yLat)) + 
+ggplot(tablenew2, aes(xLon, yLat)) + 
   geom_map(data = world, 
            map = world,
            aes(long, lat, group = group, map_id = region),
@@ -129,3 +133,19 @@ ggplot(tablenew, aes(xLon, yLat)) +
            ymin = c(14.2, 4.6) , ymax = c(13.2, 5.6), #Dakar port: x = -17.4, y = 14.7 (+0.5,-0.5)
            colour = "black", size = 13) #Abidjan port: x = -3.6, y = 5.1 (+0.5,-0.5)
 dev.off()
+
+#calculate average catch 2013-2017 within EEZs
+tablenew3 <- filter(tablenew, YearC >= 2013) %>%
+              group_by(yLat, xLon) %>%
+              summarise(total = sum(total, na.rm = T))
+
+#I save the data to open it in QGIS since eezs as polygons --> R crashes
+#eezs_poly <- readOGR(dsn = "data/World_EEZ_v11_20191118/eez_v11.shp")
+write.csv(tablenew3, "data/data_EEZs.csv")
+#I save the points within EEZs through QGIS and then export the attribute table
+#Estimation
+data_eez <- read.csv2("data/data_within_eez.csv")
+#total catch within EEZs from 2013 to 2018
+sum(data_eez$total)
+#proportion
+(sum(data_eez$total)*100)/sum(tablenew3$total)
