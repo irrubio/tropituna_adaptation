@@ -134,7 +134,7 @@ ggplot(tablenew2, aes(xLon, yLat)) +
            colour = "black", size = 13) #Abidjan port: x = -3.6, y = 5.1 (+0.5,-0.5)
 dev.off()
 
-#calculate average catch 2013-2017 within EEZs
+#calculate average catch 2013-2018 within EEZs
 tablenew3 <- filter(tablenew, YearC >= 2013) %>%
               group_by(yLat, xLon) %>%
               summarise(total = sum(total, na.rm = T))
