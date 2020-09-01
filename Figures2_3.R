@@ -9,8 +9,8 @@ library(readxl) #read_xlsx function
 library(tidyverse)
 
 #Open data
-change1 <- read_xlsx("data/DATA.xlsx", sheet = 5)
-group <- read_xlsx("data/DATA.xlsx", sheet = 1)
+change1 <- read_xlsx("data/data.xlsx", sheet = 5)
+group <- read_xlsx("data/data.xlsx", sheet = 1)
 change <- left_join(change1, group, by ="ID")
 
 change$change_value[change$change_value == "NO"] <- "No change" 
