@@ -1,6 +1,6 @@
 #### Description: this script produces manuscript Table4 
 #### INPUT: "data.xlsx" 
-#### OUTPUT: manuscript Table4
+#### OUTPUT: manuscript Table5
 #### Date: 18/02/2020
 #### Author: Iratxe Rubio
 #######################################################################
@@ -41,4 +41,4 @@ actions$ID_action <- as.factor(actions$ID_action)
 data <- left_join(important_actions, actions, by ="ID_action")
 data <- cbind(data[,4], data[,2], data[,3])
 
-write.csv(data, row.names = F, "data/Table4.csv")
+write.csv(data, row.names = F, "data/Table5.csv")
