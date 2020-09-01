@@ -1,6 +1,6 @@
-#### Description: this script produces manuscript Figures 3 and 4
+#### Description: this script produces manuscript Figures 2 and 3
 #### INPUT: "data.xlsx" 
-#### OUTPUT: manuscript Figures 3 and 4
+#### OUTPUT: manuscript Figures 2 and 3
 #### Date: 18/02/2020
 #### Author: Iratxe Rubio
 #######################################################################
