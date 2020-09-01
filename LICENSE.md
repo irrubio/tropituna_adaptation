@@ -1,6 +1,6 @@
 MIT License is applicable for the code and 
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License 
-for the 'data.xlsx' included in the 'data' folder.
+for the 'data.xlsx' database included in the 'data' folder.
 
 Copyright (c) 2020 irrubio
 
