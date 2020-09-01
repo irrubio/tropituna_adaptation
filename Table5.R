@@ -1,4 +1,4 @@
-#### Description: this script produces manuscript Table4 
+#### Description: this script produces manuscript Table5 
 #### INPUT: "data.xlsx" 
 #### OUTPUT: manuscript Table5
 #### Date: 18/02/2020
