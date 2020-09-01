@@ -1,3 +1,11 @@
+#### Description: this script produces manuscript Figure1 and calculates
+#### the average catch 2013-2018 within EEZs in Table 1.
+#### INPUT: ICCAT data, shape files and "data_within_eez.csv"
+#### OUTPUT: manuscript Figure1 and average catch 2013-2018 within EEZs
+#### Date: 11/06/2020
+#### Author: Iratxe Rubio
+#######################################################################
+
 library(readxl)#read_xlsx function
 library(tidyverse)
 library(sp) #spatial objects
@@ -5,7 +13,9 @@ options("rgdal_show_exportToProj4_warnings"="none")
 library(rgdal) #readOgr
 library(rgeos) # gBuffer, gOverlap
 
-#1.READ the data####
+
+#1.Download ICCAT data and read the data####
+#https://www.iccat.int/Data/t2ce_PS91-18_bySchool.7z
 data_orig <- read_xlsx("data/t2ce_PS91-18_bySchool.xlsx", sheet = 1, skip = 6)
 
 data <- filter(data_orig, Flag == "EU.España")
@@ -134,7 +144,7 @@ ggplot(tablenew2, aes(xLon, yLat)) +
            colour = "black", size = 13) #Abidjan port: x = -3.6, y = 5.1 (+0.5,-0.5)
 dev.off()
 
-#calculate average catch 2013-2018 within EEZs
+#5. Calculate average catch 2013-2018 within EEZs####
 tablenew3 <- filter(tablenew, YearC >= 2013) %>%
               group_by(yLat, xLon) %>%
               summarise(total = sum(total, na.rm = T))
