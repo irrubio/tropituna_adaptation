@@ -1,5 +1,5 @@
 #### Description: this script produces manuscript Figure1 and calculates
-#### the average catch 2013-2018 within EEZs in Table 1.
+#### the average catch 2013-2018 within EEZs (in Table 1).
 #### INPUT: ICCAT data, shape files and "data_within_eez.csv"
 #### OUTPUT: manuscript Figure1 and average catch 2013-2018 within EEZs
 #### Date: 11/06/2020
@@ -15,6 +15,7 @@ library(rgeos) # gBuffer, gOverlap
 
 
 #1.Download ICCAT data and read the data####
+#https://www.iccat.int/es/accesingdb.html
 #https://www.iccat.int/Data/t2ce_PS91-18_bySchool.7z
 data_orig <- read_xlsx("data/t2ce_PS91-18_bySchool.xlsx", sheet = 1, skip = 6)
 
