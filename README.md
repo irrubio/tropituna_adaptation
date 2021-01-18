@@ -3,7 +3,7 @@
 
 ## Description
 
-This repository allows to replicate results from the article *Adaptation in a large-scale tuna fishery is not dependent on awareness of climate change*. The scripts in Figure 1 produce figures from the manuscript. The 'data' folder contains the 'non-public' data used to run the scripts.
+This repository allows to replicate results from the article *The majority of adaptation actions in a large-scale tuna fishery are not a conscious response to climate change*. The scripts in Figure 1 produce figures from the manuscript. The 'data' folder contains the 'non-public' data used to run the scripts.
 
 ![](Images/outline_scripts.jpg)
 
