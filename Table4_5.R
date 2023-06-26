@@ -1,6 +1,6 @@
 #### Description: this script produces manuscript Figure5
 #### INPUT: "data.xlsx" 
-#### OUTPUT: manuscript Figure5
+#### OUTPUT: manuscript Table 4 and 5
 #### Date: 10/06/2023
 #### Author: Iratxe Rubio
 #######################################################################
