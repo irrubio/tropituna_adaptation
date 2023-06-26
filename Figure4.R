@@ -14,13 +14,13 @@ CV <- read_xlsx("data/data.xlsx", sheet = 4)
 group <- read_xlsx("data/data.xlsx", sheet = 1)
 data <- left_join(CV, group, by ="ID")
 
-CV_vars <- c("Recreational \n activities", #1
-             "Private \n business", #2
-             "Inspiration culture/\ndesign", #3
-             "Traditional knowledge \n customs", #4
-             "Belonging/ \n identity", #5
-             "Job \n positions", #6
-             "Tourism" #7
+CV_vars <- c("Recreational activities \n(n = 13)", #1
+             "Private business \n (n = 13)", #2
+             "Inspiration culture /\ndesign (n = 13)", #3
+             "Traditional knowledge \n customs (n = 13)", #4
+             "Belonging / identity \n (n = 13)", #5
+             "Job positions \n(n = 13)", #6
+             "Tourism \n(n = 13)" #7
 )
 
 generated <- c("Not at all", #1
@@ -44,17 +44,19 @@ df_group$CV_component <- factor(df_group$CV_component,
 
 levels(df_group$CV_value) <- generated
 
-jpeg("Figure2.jpg", 
+df_group$proportion <- round((df_group$number/13)*100, 1)
+
+jpeg("Figure4.jpg", 
     width = 13, height = 6.5, units = 'in', res = 300)
 
 ggplot(df_group, aes(x = group, fill = CV_value)) + 
   geom_bar(data = df_group,
-           aes(y = number), 
+           aes(y = proportion), 
            position = position_stack(reverse = T), 
            stat = "identity") +
   coord_flip() +
   xlab("") +
-  ylab("Number of responses") +
+  ylab("Percentage of respondents (%)") +
   theme_bw() +
   theme(legend.title = element_blank(),
         legend.text = element_text(size = 16),
@@ -66,7 +68,7 @@ ggplot(df_group, aes(x = group, fill = CV_value)) +
         legend.justification = "top") +
   scale_fill_manual(values = c("Extremely" = "#018571", #brewer.pal(n = 5, name = 'BrBG')
                                "Very" = "#80CDC1",
-                               "Moderately" = "gray87",
+                               "Moderately" = "#F0E442",
                                "Slightly" = "#DFC27D",
                                "Not at all" = "#A6611A"),
                     breaks = as.character(df_group$CV_value),

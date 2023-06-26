@@ -15,14 +15,14 @@ change <- left_join(change1, group, by ="ID")
 
 change$change_value[change$change_value == "NO"] <- "No change" 
 change$change_value[change$change_value == "DN"] <- "Don't know" 
-change$change_value[change$change_value == "variability"] <- "Variability" 
+change$change_value[change$change_value == "variability"] <- "Natural variability" 
 change$change_value[change$change_value == "increase"] <- "Increase" 
 change$change_value[change$change_value == "decrease"] <- "Decrease" 
 change$change_value[change$change_value == "N/S"] <- "North/South change"
 
-change$change_component[change$change_component == "weather_risks"] <- "Fishery\nrisks"
-change$change_component[change$change_component == "stock_distribution"] <- "Stock\ndistribution"
-change$change_component[change$change_component == "stock_abundance"] <- "Stock\nabundance"
+change$change_component[change$change_component == "weather_risks"] <- "Fishery\nrisks\n(n = 13)"
+change$change_component[change$change_component == "stock_distribution"] <- "Stock\ndistribution\n(n = 13)"
+change$change_component[change$change_component == "stock_abundance"] <- "Stock\nabundance\n(n = 13)"
 
 ####CC perception
 change_CC_vars <- c("Don't know", #0
@@ -37,18 +37,26 @@ df_group <- change %>%
               group_by(change_component, change_value, group) %>% 
               summarise(number = n())
 
-df_group$change_value <- as.factor(df_group$change_value)
+df_group$change_value <- factor(df_group$change_value, levels = c("Increase",
+                                                                  "Decrease",
+                                                                  "North/South change",
+                                                                  "Natural variability",
+                                                                  "No change" ,
+                                                                  "Don't know"))
 
-jpeg("Figure3.jpg", 
+df_group$proportion <- round((df_group$number/13)*100, 1)
+
+jpeg("Figure2.jpg", 
     width = 11, height = 4, units = 'in', res = 300)
 
 ggplot(df_group, aes(x = group,
-               y = number,
+               y = proportion,
                fill = change_value)) + 
+  scale_fill_manual(values = c("#018571","#80CDC1","#CC79A7","#F0E442","black","#999999")) +
   geom_bar(stat = "identity") +
   coord_flip() +
   xlab("") +
-  ylab("Number of responses") +
+  ylab("Percentage of respondents (%)") +
   theme_bw() +
   theme(legend.title = element_blank(),
         legend.text = element_text(size = 16),
@@ -57,7 +65,7 @@ ggplot(df_group, aes(x = group,
         axis.title = element_text(size = 16),
         strip.text = element_text(size = 16),
         plot.title = element_text(size = 16)) +
-  scale_fill_brewer(palette = 'Paired') +
+  #scale_fill_brewer(palette = 'Paired') +
   facet_wrap(~change_component) #+
   
 dev.off()
@@ -72,18 +80,20 @@ df2_group$change_CC <- as.factor(df2_group$change_CC)
 
 levels(df2_group$change_CC) <- change_CC_vars
 
+df2_group$proportion <- round((df2_group$number/13)*100, 1)
 
-jpeg("Figure4.jpg", 
+
+jpeg("Figure3.jpg", 
     width = 11, height = 4, units = 'in', res = 300)
 
 ggplot(df2_group, aes(x = group, fill = change_CC)) + 
   geom_bar(data = df2_group,
-           aes(y = number), 
+           aes(y = proportion), 
            position = position_stack(reverse = T), 
            stat = "identity") +
   coord_flip() +
   xlab("") +
-  ylab("Number of responses") +
+  ylab("Percentage of respondents (%)") +
   theme_bw() +
   theme(legend.title = element_blank(),
         legend.text = element_text(size = 16),
@@ -94,10 +104,10 @@ ggplot(df2_group, aes(x = group, fill = change_CC)) +
         plot.title = element_text(size = 16)) +
   scale_fill_manual(values = c("Extremely" = "#018571",
                                "Very" = "#80CDC1",
-                               "Moderately" = "gray87",
+                               "Moderately" = "#F0E442",
                                "Slightly" = "#DFC27D",
                                "Not at all" = "#A6611A",
-                               "Don't know" = "black"),
+                               "Don't know" = "#999999"),
                     breaks = as.character(change_CC_vars),
                     guide = guide_legend(reverse = T)) +
   scale_y_continuous(labels = abs) + #, limits = c(-6,6)

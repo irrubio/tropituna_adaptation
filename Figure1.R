@@ -13,7 +13,6 @@ options("rgdal_show_exportToProj4_warnings"="none")
 library(rgdal) #readOgr
 library(rgeos) # gBuffer, gOverlap
 
-
 #1.Download ICCAT data and read the data####
 #https://www.iccat.int/es/accesingdb.html
 #https://www.iccat.int/Data/t2ce_PS91-18_bySchool.7z
