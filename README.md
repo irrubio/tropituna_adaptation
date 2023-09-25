@@ -3,7 +3,7 @@
 
 ## Description
 
-This repository allows to replicate results from the article *Adaptation to climate change in industrial fisheries: evidence from the Basque tropical tuna system*. The scripts in Figure 1 produce figures from the manuscript. The 'data' folder contains the 'non-public' data used to run the scripts.
+This repository allows to replicate results from the article *Adaptation to climate change in industrial fisheries: progress in the Basque tropical tuna system*. The scripts in Figure 1 produce figures from the manuscript. The 'data' folder contains the 'non-public' data used to run the scripts.
 
 ![](Images/outline_scripts.jpg)
 
